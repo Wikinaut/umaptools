@@ -36,11 +36,11 @@ import argparse
 def setup_parser():
 
     my_parser = argparse.ArgumentParser( prog = re.sub( '.py$', '', sys.argv[0] ),
-        usage = '%(prog)s ',
+        usage = '%(prog)s umapnumber [-h] [-x] [-y] [-c|--color] [-w|weight] [-o|opacity]',
         description = 'Umap parser adds a grid and extract, sorts, numbers texts according to coordinates'
     )
 
-    my_parser.add_argument('umap', action='store', type=int, help='number of the umap you want to process')
+    my_parser.add_argument('umapnumber', action='store', type=int, help='number of the umap you want to process')
     my_parser.add_argument('-x', action='store', default='2', type=int, choices=range(1, 10), help='number of x tiles')
     my_parser.add_argument('-y', action='store', default='2', type=int, choices=range(1, 10), help='number of y tiles')
     my_parser.add_argument('-c','--color', action='store', default='black', type=str, help='color of the grid lines')
@@ -54,7 +54,7 @@ def setup_parser():
 args = setup_parser()
 print(args)
 
-umapnumber = args.umap
+umapnumber = args.umapnumber
 gridtileslon = args.x
 gridtileslat = args.y
 gridcolor = args.color

@@ -19,18 +19,18 @@ Collection of utility scripts for umaps on https://umap.openstreemap.fr
 
 
 ```
-usage: ./gridparse 
+usage: ./gridparse umapnumber [-h] [-x] [-y] [-c|--color] [-w|weight] [-o|opacity]
 
 Umap parser adds a grid and extract, sorts, numbers texts according to coordinates
 
 positional arguments:
-  umap                  number of the umap you want to process
+  umapnumber            number of the umap you want to process
 
 optional arguments:
   -h, --help            show this help message and exit
-  -x {1,2,3,4,5,6,7,8,9,10}
+  -x {1,2,3,4,5,6,7,8,9}
                         number of x tiles
-  -y {1,2,3,4,5,6,7,8,9,10}
+  -y {1,2,3,4,5,6,7,8,9}
                         number of y tiles
   -c COLOR, --color COLOR
                         color of the grid lines
