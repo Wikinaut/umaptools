@@ -1,0 +1,418 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        [
+            {
+                "type": "Feature",
+                "properties": {
+                    "_umap_options": {
+                        "color": "white",
+                        "opacity": 1.0,
+                        "weight": 3,
+                        "showLabel": true,
+                        "fillColor": "White",
+                        "fillOpacity": "0.0",
+                        "labelDirection": "top",
+                        "popupTemplate": "Default",
+                        "popupShape": "Default",
+                        "labelInteractive": false
+                    },
+                    "name": "A1"
+                },
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [
+                                13.338432,
+                                52.523611
+                            ],
+                            [
+                                13.351693,
+                                52.523611
+                            ],
+                            [
+                                13.351693,
+                                52.518057
+                            ],
+                            [
+                                13.338432,
+                                52.518057
+                            ],
+                            [
+                                13.338432,
+                                52.523611
+                            ]
+                        ]
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "_umap_options": {
+                        "color": "white",
+                        "opacity": 1.0,
+                        "weight": 3,
+                        "showLabel": true,
+                        "fillColor": "White",
+                        "fillOpacity": "0.0",
+                        "labelDirection": "top",
+                        "popupTemplate": "Default",
+                        "popupShape": "Default",
+                        "labelInteractive": false
+                    },
+                    "name": "A2"
+                },
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [
+                                13.338432,
+                                52.518057
+                            ],
+                            [
+                                13.351693,
+                                52.518057
+                            ],
+                            [
+                                13.351693,
+                                52.512503
+                            ],
+                            [
+                                13.338432,
+                                52.512503
+                            ],
+                            [
+                                13.338432,
+                                52.518057
+                            ]
+                        ]
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "_umap_options": {
+                        "color": "white",
+                        "opacity": 1.0,
+                        "weight": 3,
+                        "showLabel": true,
+                        "fillColor": "White",
+                        "fillOpacity": "0.0",
+                        "labelDirection": "top",
+                        "popupTemplate": "Default",
+                        "popupShape": "Default",
+                        "labelInteractive": false
+                    },
+                    "name": "A3"
+                },
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [
+                                13.338432,
+                                52.512503
+                            ],
+                            [
+                                13.351693,
+                                52.512503
+                            ],
+                            [
+                                13.351693,
+                                52.506949
+                            ],
+                            [
+                                13.338432,
+                                52.506949
+                            ],
+                            [
+                                13.338432,
+                                52.512503
+                            ]
+                        ]
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "_umap_options": {
+                        "color": "white",
+                        "opacity": 1.0,
+                        "weight": 3,
+                        "showLabel": true,
+                        "fillColor": "White",
+                        "fillOpacity": "0.0",
+                        "labelDirection": "top",
+                        "popupTemplate": "Default",
+                        "popupShape": "Default",
+                        "labelInteractive": false
+                    },
+                    "name": "B1"
+                },
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [
+                                13.351693,
+                                52.523611
+                            ],
+                            [
+                                13.364954000000001,
+                                52.523611
+                            ],
+                            [
+                                13.364954000000001,
+                                52.518057
+                            ],
+                            [
+                                13.351693,
+                                52.518057
+                            ],
+                            [
+                                13.351693,
+                                52.523611
+                            ]
+                        ]
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "_umap_options": {
+                        "color": "white",
+                        "opacity": 1.0,
+                        "weight": 3,
+                        "showLabel": true,
+                        "fillColor": "White",
+                        "fillOpacity": "0.0",
+                        "labelDirection": "top",
+                        "popupTemplate": "Default",
+                        "popupShape": "Default",
+                        "labelInteractive": false
+                    },
+                    "name": "B2"
+                },
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [
+                                13.351693,
+                                52.518057
+                            ],
+                            [
+                                13.364954000000001,
+                                52.518057
+                            ],
+                            [
+                                13.364954000000001,
+                                52.512503
+                            ],
+                            [
+                                13.351693,
+                                52.512503
+                            ],
+                            [
+                                13.351693,
+                                52.518057
+                            ]
+                        ]
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "_umap_options": {
+                        "color": "white",
+                        "opacity": 1.0,
+                        "weight": 3,
+                        "showLabel": true,
+                        "fillColor": "White",
+                        "fillOpacity": "0.0",
+                        "labelDirection": "top",
+                        "popupTemplate": "Default",
+                        "popupShape": "Default",
+                        "labelInteractive": false
+                    },
+                    "name": "B3"
+                },
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [
+                                13.351693,
+                                52.512503
+                            ],
+                            [
+                                13.364954000000001,
+                                52.512503
+                            ],
+                            [
+                                13.364954000000001,
+                                52.506949
+                            ],
+                            [
+                                13.351693,
+                                52.506949
+                            ],
+                            [
+                                13.351693,
+                                52.512503
+                            ]
+                        ]
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "_umap_options": {
+                        "color": "white",
+                        "opacity": 1.0,
+                        "weight": 3,
+                        "showLabel": true,
+                        "fillColor": "White",
+                        "fillOpacity": "0.0",
+                        "labelDirection": "top",
+                        "popupTemplate": "Default",
+                        "popupShape": "Default",
+                        "labelInteractive": false
+                    },
+                    "name": "C1"
+                },
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [
+                                13.364954000000001,
+                                52.523611
+                            ],
+                            [
+                                13.378215,
+                                52.523611
+                            ],
+                            [
+                                13.378215,
+                                52.518057
+                            ],
+                            [
+                                13.364954000000001,
+                                52.518057
+                            ],
+                            [
+                                13.364954000000001,
+                                52.523611
+                            ]
+                        ]
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "_umap_options": {
+                        "color": "white",
+                        "opacity": 1.0,
+                        "weight": 3,
+                        "showLabel": true,
+                        "fillColor": "White",
+                        "fillOpacity": "0.0",
+                        "labelDirection": "top",
+                        "popupTemplate": "Default",
+                        "popupShape": "Default",
+                        "labelInteractive": false
+                    },
+                    "name": "C2"
+                },
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [
+                                13.364954000000001,
+                                52.518057
+                            ],
+                            [
+                                13.378215,
+                                52.518057
+                            ],
+                            [
+                                13.378215,
+                                52.512503
+                            ],
+                            [
+                                13.364954000000001,
+                                52.512503
+                            ],
+                            [
+                                13.364954000000001,
+                                52.518057
+                            ]
+                        ]
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "_umap_options": {
+                        "color": "white",
+                        "opacity": 1.0,
+                        "weight": 3,
+                        "showLabel": true,
+                        "fillColor": "White",
+                        "fillOpacity": "0.0",
+                        "labelDirection": "top",
+                        "popupTemplate": "Default",
+                        "popupShape": "Default",
+                        "labelInteractive": false
+                    },
+                    "name": "C3"
+                },
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [
+                                13.364954000000001,
+                                52.512503
+                            ],
+                            [
+                                13.378215,
+                                52.512503
+                            ],
+                            [
+                                13.378215,
+                                52.506949
+                            ],
+                            [
+                                13.364954000000001,
+                                52.506949
+                            ],
+                            [
+                                13.364954000000001,
+                                52.512503
+                            ]
+                        ]
+                    ]
+                }
+            }
+        ]
+    ],
+    "_umap_options": {
+        "displayOnLoad": true,
+        "browsable": true,
+        "remoteData": {},
+        "name": "Grid"
+    }
+}
