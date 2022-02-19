@@ -16,3 +16,26 @@ Collection of utility scripts for umaps on https://umap.openstreemap.fr
 3. Text function
    extract all feature names and texts   
    order the features by their position, number them and write a text file   
+
+
+```
+usage: ./gridparse 
+
+Umap parser adds a grid and extract, sorts, numbers texts according to coordinates
+
+positional arguments:
+  umap                  number of the umap you want to process
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -x {1,2,3,4,5,6,7,8,9,10}
+                        number of x tiles
+  -y {1,2,3,4,5,6,7,8,9,10}
+                        number of y tiles
+  -c COLOR, --color COLOR
+                        color of the grid lines
+  -w WEIGHT, --weight WEIGHT
+                        weight (width) of the grid lines
+  -o OPACITY, --opacity OPACITY
+                        opacity of the grid lines
+```
