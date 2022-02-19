@@ -17,7 +17,7 @@ Collection of utility scripts for umaps on https://umap.openstreemap.fr
    extract all feature names and texts   
    order the features by their position, number them and write a text file   
 
-<img src="https://raw.githubusercontent.com/Wikinaut/umaptools/documentation/testumap-with-3x3-grid.png" width=1200>
+<img src="https://raw.githubusercontent.com/Wikinaut/umaptools/main/documentation/testumap-with-3x3-grid.png" width=1200>
 
 ```
 usage: ./gridparse umapnumber [-h] [-x] [-y] [-c|--color] [-w|weight] [-o|opacity]
