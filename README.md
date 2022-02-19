@@ -10,7 +10,7 @@ Collection of utility scripts for umaps on https://umap.openstreemap.fr
 2. Grid function
 
    draw a grid n by m polygon rectangles (sectors)   
-   number each sector with a char-digit combination like A1..Z20   
+   number each sector with a char-digit combination like A1..D4   
    create a json file comprising the grid and the sector identifiers   
    
 3. Text function
