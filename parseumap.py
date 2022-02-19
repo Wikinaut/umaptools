@@ -1,0 +1,424 @@
+#!/usr/bin/env python3
+
+#    Utility program for umaps
+#    on https://umap.openstreemap.fr
+#
+#
+#    0. Download an existing umap
+#
+#    1. Bounding box function
+#
+#    calculate a bounding area to bound all features in a map
+#
+#
+#    2. Grid function
+#
+#    draw a grid n by m polygon rectangles (sectors)
+#    number each sector with a char-digit combination like A1..Z20
+#    create a json file comprising the grid and the sector identifiers
+#
+#
+#    3. Text function
+#
+#    extract all feature names and texts
+#    order the features by their position, number them and write a text file
+#
+#    20220217 init
+
+import json
+import urllib.request
+import numpy as np
+from datetime import datetime
+import sys
+import re
+import argparse
+
+def setup_parser():
+
+    my_parser = argparse.ArgumentParser( prog = re.sub( '.py$', '', sys.argv[0] ),
+        usage = '%(prog)s ',
+        description = 'Umap parser adds a grid and extract, sorts, numbers texts according to coordinates'
+    )
+
+    my_parser.add_argument('umap', action='store', type=int, help='number of the umap you want to process')
+    my_parser.add_argument('-x', action='store', default='2', type=int, choices=range(1, 26), help='number of x tiles')
+    my_parser.add_argument('-y', action='store', default='2', type=int, choices=range(1, 26), help='number of y tiles')
+    my_parser.add_argument('-c','--color', action='store', default='black', type=str, help='color of the grid lines')
+    my_parser.add_argument('-w','--weight', action='store', default='2', type=int, help='weight (width) of the grid lines')
+    my_parser.add_argument('-o','--opacity', action='store', default='0.3', type=float, help='opacity of the grid lines')
+
+    args = my_parser.parse_args()
+
+    return args
+
+args = setup_parser()
+print(args)
+
+umapnumber = args.umap
+gridtileslon = args.x
+gridtileslat = args.y
+gridcolor = args.color
+gridweight = args.weight
+gridopacity = args.opacity
+
+url = "https://urban.to/projects/radnetz/umap/export/{0}".format(umapnumber)
+req = urllib.request.Request(url)
+r = urllib.request.urlopen(req).read()
+data = json.loads(r.decode('utf-8'))
+
+umapname = data['properties']['name']
+
+now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+basicinfo = "'{0}' (umap {1}) {2}\nhttps://umap.openstreetmap.fr/de/map/map_{1}".format(umapname,umapnumber,now)
+print(basicinfo)
+
+umapinfile = "umap-original-{0}-{1}.umap".format(umapname,umapnumber)
+
+with open(umapinfile, 'w') as infile:
+    json.dump(data, infile, indent=4)
+
+umapoutfile = "umap-with-grid-{0}-{1}.umap".format(umapname,umapnumber)
+umapgridfile = "umap-grid-only-{0}-{1}.json".format(umapname,umapnumber)
+umaptextfile = "umap-{0}-{1}.umap.txt".format(umapname,umapnumber)
+
+outbuf = []
+
+bbox = {
+    "minlon": 181.0,
+    "maxlon": -181.0,
+    "minlat": 91.0,
+    "maxlat": -91.0,
+}
+
+def boundingbox(coor):
+  global bbox
+  bbox['minlon'] = min(coor[0],bbox['minlon'])
+  bbox['maxlon'] = max(coor[0],bbox['maxlon'])
+  bbox['minlat'] = min(coor[1],bbox['minlat'])
+  bbox['maxlat'] = max(coor[1],bbox['maxlat'])
+
+
+# Pass 1: Determine a boundingbox: where are features present?
+
+for i in data['layers']:
+
+  for j in i['features']:
+
+    coor = [0,0] # [lon,lat]
+
+    try:
+      geometrietyp = j['geometry']['type']
+
+      if geometrietyp == "Point":
+         coor = [j['geometry']['coordinates'][0],j['geometry']['coordinates'][1]]
+         boundingbox(coor)
+
+      if (geometrietyp == "LineString") and (len(j['properties']) > 0):
+
+         lat = []
+         lon = []
+
+         for each in j['geometry']['coordinates']:
+           lon.append(each[0])
+           lat.append(each[1])
+           boundingbox([each[0],each[1]])
+
+         coor = [np.median(lon),np.median(lat)]
+
+      if geometrietyp == "Polygon":
+
+         lat = []
+         lon = []
+
+         for each in j['geometry']['coordinates'][0]:
+           lon.append(each[0])
+           lat.append(each[1])
+           boundingbox([each[0],each[1]])
+
+         coor = [np.median(lon),np.median(lat)]
+
+    except:
+      None
+
+    # loop through all layers ends
+
+
+# print("Boundingbox: {0}".format(bbox))
+
+# Pass 2: Create a grid
+
+difflon = abs(bbox['maxlon']-bbox['minlon'])
+difflat = abs(bbox['maxlat']-bbox['minlat'])
+
+deltalon = difflon/gridtileslon
+deltalat = difflat/gridtileslat
+
+# draw grid lines
+
+grid = []
+
+startlon = min(bbox['minlon'],bbox['maxlon'])
+stoplon = max(bbox['minlon'],bbox['maxlon'])
+
+startlat = max(bbox['minlat'],bbox['maxlat'])
+stoplat = min(bbox['minlat'],bbox['maxlat'])
+
+def uline(line,name=None,color="Black",weight=4,opacity=0.7):
+  return {
+          "type": "Feature",
+          "properties": {
+            "_umap_options": {
+              "color": color,
+              "opacity": opacity,
+              "weight": weight,
+              "showLabel": None
+            },
+            "name": name
+          },
+          "geometry": {
+            "type": "LineString",
+            "coordinates": line
+          }
+  }
+
+def upolygon(coordinates,name=None,color="Black",weight=4,opacity=0.7):
+  return {
+          "type": "Feature",
+          "properties": {
+            "_umap_options": {
+              "color": color,
+              "opacity": opacity,
+              "weight": weight,
+              "showLabel": True,
+              "fillColor": "White",
+              "fillOpacity": "0.0",
+              "labelDirection": "top", # or "auto",
+              "popupTemplate": "Default",
+              "popupShape": "Default",
+              "labelInteractive": False
+            },
+            "name": name
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [coordinates]
+          }
+  }
+
+
+def ulayer(name,features):
+  return {
+            "type": "FeatureCollection",
+            "features": [features],
+            "_umap_options": {
+                "displayOnLoad": True,
+                "browsable": True,
+                "remoteData": {},
+                "name": name
+            }
+  }
+
+blon = []
+blat = []
+
+def box(startcoor,stopcoor,sectorlon,sectorlat):
+  global blon,blat
+
+  startlon = startcoor[0]
+  startlat = startcoor[1]
+  stoplon = stopcoor[0]
+  stoplat = stopcoor[1]
+
+  blon.append({
+    "lon1": min(startlon,stoplon),
+    "lon2": max(startlon,stoplon),
+    "sectorlon":  sectorlon
+  })
+
+  blat.append({
+    "lat1": min(startlat,stoplat),
+    "lat2": max(startlat,stoplat),
+    "sectorlat": sectorlat
+  })
+
+  return [
+    [startlon,startlat],[stoplon,startlat],[stoplon,stoplat],
+    [startlon,stoplat],[startlon,startlat]
+  ]
+
+mapchar = range(ord('A'), ord('Z')+1)
+
+gridboxes = []
+
+for ilon in range(0,gridtileslon):
+
+  for ilat in range(0,gridtileslat):
+
+    sectorlon = chr(mapchar[ilon])
+    sectorlat = str(ilat+1)
+
+    toplon = min(startlon,stoplon)
+    toplat = max(startlat,stoplat)
+
+    gridboxes.append(upolygon(
+      box(
+        [toplon+ilon*deltalon,toplat-ilat*deltalat],
+	[toplon+(ilon+1)*deltalon,toplat-(ilat+1)*deltalat],
+        sectorlon, sectorlat
+      ), sectorlon+sectorlat, gridcolor, gridweight, gridopacity
+    ))
+
+
+def isPresentGrid():
+  for i in data['layers']:
+    if i['_umap_options']['name'] == "Grid":
+      return True
+      break
+  return False
+
+if not isPresentGrid():
+  data['layers'].insert(0,ulayer("Grid",gridboxes))
+  print("A new grid {0}x{1} is created.".format(gridtileslon,gridtileslat))
+else:
+  for i in data['layers']:
+    if i['_umap_options']['name'] == "Grid":
+      i = ulayer("Grid",gridboxes)
+      print("An existing grid is updated by a {0}x{1} grid.".format(gridtileslon,gridtileslat))
+      break
+
+with open(umapgridfile, 'w') as gridfile:
+    json.dump(ulayer("Grid",gridboxes), gridfile, indent=4)
+
+
+def findsector(coor):
+  global blon,blat
+
+  if coor[0] == 0.0 and coor[1] == 0.0:
+    return ["",""]
+
+  for i in range(len(blon)):
+    if coor[0] >= blon[i]['lon1'] and coor[0] <= blon[i]['lon2']:
+      sectorlon = blon[i]['sectorlon']
+      break
+
+  for i in range(len(blat)):
+    if coor[1] >= blat[i]['lat1'] and coor[1] <= blat[i]['lat2']:
+      sectorlat = blat[i]['sectorlat']
+      break
+
+  return [sectorlon,sectorlat]
+
+
+# Pass 1b: Assigning a sector identifier
+
+for i in data['layers']:
+
+  if i['_umap_options']['name'] == "Grid":
+    continue
+
+  for j in i['features']:
+
+    coor = [0,0] # [lon,lat]
+
+    try:
+      description = j['properties']['description']
+    except:
+      description = ""
+
+    try:
+      geometrietyp = j['geometry']['type']
+
+      if geometrietyp == "Point":
+         coor = [j['geometry']['coordinates'][0],j['geometry']['coordinates'][1]]
+         boundingbox(coor)
+
+      if (geometrietyp == "LineString") and (len(j['properties']) > 0):
+         geometrietyp = "Linie"
+
+         lat = []
+         lon = []
+
+         for each in j['geometry']['coordinates']:
+           lon.append(each[0])
+           lat.append(each[1])
+           boundingbox([each[0],each[1]])
+
+         coor = [np.median(lon),np.median(lat)]
+
+      if geometrietyp == "Polygon":
+
+         lat = []
+         lon = []
+
+         for each in j['geometry']['coordinates'][0]:
+           lon.append(each[0])
+           lat.append(each[1])
+           boundingbox([each[0],each[1]])
+
+         coor = [np.median(lon),np.median(lat)]
+
+    except:
+      geometrietyp = ""
+
+    try:
+      name = j['properties']['name']
+    except:
+      name = ""
+
+    sector = findsector(coor)
+
+    if len(name+description) > 0:
+       if len(description) != 0:
+         outbuf.append([coor,
+           sector[0],sector[1],
+           geometrietyp,
+           "[{0}] {1}\n{2}"
+           .format(sector[0]+sector[1],name.rstrip('\n'),description.rstrip('\n'))
+         ])
+       else:
+         outbuf.append([coor,
+           sector[0],sector[1],
+           geometrietyp,
+           "[{0}] {1}".format(sector[0]+sector[1],name.rstrip('\n'))
+         ])
+
+outbuf_sorted = sorted(outbuf, key=lambda x: (x[1],x[2]))
+
+f = open(umaptextfile, "w")
+f.write(basicinfo+"\n\n")
+
+i = 1
+for line in outbuf_sorted:
+  f.write("{4:02d}. {3}\n[{0:0.6f},{1:0.6f}] ({2})\n\n".format(line[0][0],line[0][1],line[3],line[4],i))
+  i += 1
+
+"""
+# draw the boundingbox in a new layer
+
+data['layers'].append(
+  ulayer("Boundingbox",
+    upolygon(box([startlon,startlat],[stoplon,stoplat]),
+    "BoundingBox","White",4,0.7)
+  )
+)
+
+# draw horizontal and vertical grid lines in a new layer
+
+gridlines=[]
+  for i in grid:
+  gridlines.append(uline(i,"Gridline","White",4,0.7))
+data['layers'].append(ulayer("Gridlines",gridlines))
+"""
+
+# Pass 3: Assign the grid sector labels to each feature
+
+# write new modified json to disk
+
+with open(umapoutfile, 'w') as outfile:
+    json.dump(data, outfile, indent=4)
+
+print("Boundingbox: {0}".format(bbox))
+print("Downloaded umap written to '{0}'.".format(umapinfile))
+print("Umap with grid and sector numbers written to '{0}'.".format(umapoutfile))
+print("Grid as single umap layer written to '{0}'.".format(umapgridfile))
+print("Text data written to '{0}'.".format(umaptextfile))
