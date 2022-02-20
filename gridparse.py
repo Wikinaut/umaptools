@@ -41,8 +41,8 @@ def setup_parser():
     )
 
     my_parser.add_argument('umapnumber', action='store', type=int, help='number of the umap you want to process')
-    my_parser.add_argument('-x', action='store', default='2', type=int, choices=range(1, 10), help='number of x tiles')
-    my_parser.add_argument('-y', action='store', default='2', type=int, choices=range(1, 10), help='number of y tiles')
+    my_parser.add_argument('-x', action='store', default='2', type=int, choices=range(1, 11), help='number of x tiles')
+    my_parser.add_argument('-y', action='store', default='2', type=int, choices=range(1, 11), help='number of y tiles')
     my_parser.add_argument('-c','--color', action='store', default='black', type=str, help='color of the grid lines')
     my_parser.add_argument('-w','--weight', action='store', default='2', type=int, help='weight (width) of the grid lines')
     my_parser.add_argument('-o','--opacity', action='store', default='0.3', type=float, help='opacity of the grid lines')
