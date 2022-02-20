@@ -20,7 +20,16 @@ Collection of utility scripts for umaps on https://umap.openstreemap.fr
 <img src="https://raw.githubusercontent.com/Wikinaut/umaptools/main/documentation/testumap-with-3x3-grid.png" width=1200>
 
 * https://twitter.com/Wikinaut/status/1495188916198162439
-
+```
+New utility script for umaps: gridparse.py
++ determine bounding box
++ create user-defined Grid*)
++ label sectors with ids "A1"…
++ extract feature texts, add sector ids to the texts
++ sort texts from NW→SE**)
+*) manual import→umap
+**) text
+```
 
 ```
 usage: ./gridparse umapnumber [-h] [-x] [-y] [-c|--color] [-w|weight] [-o|opacity]
