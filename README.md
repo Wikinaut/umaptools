@@ -13,7 +13,7 @@ Collection of utility scripts for umaps on https://umap.openstreemap.fr
    number each sector with a char-digit combination like A1..D4   
    create a json file comprising the grid and the sector identifiers   
    
-3. Text function
+3. Text function   
    extract all feature names and texts   
    order the features by their position, number them and write a text file   
 
