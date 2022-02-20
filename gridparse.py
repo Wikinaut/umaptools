@@ -333,7 +333,6 @@ for i in data['layers']:
          boundingbox(coor)
 
       if (geometrietyp == "LineString") and (len(j['properties']) > 0):
-         geometrietyp = "Linie"
 
          lat = []
          lon = []
