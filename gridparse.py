@@ -270,8 +270,8 @@ for ilon in range(0,gridtileslon):
 
 
 def isPresentGrid():
-  for i in data['layers']:
-    if i['_umap_options']['name'] == "Grid":
+  for layer in data['layers']:
+    if layer['_umap_options']['name'] == "Grid":
       return True
       break
   return False
@@ -280,9 +280,12 @@ if not isPresentGrid():
   data['layers'].insert(0,ulayer("Grid",gridboxes))
   print("A new grid {0}x{1} is created.".format(gridtileslon,gridtileslat))
 else:
-  for i in data['layers']:
-    if i['_umap_options']['name'] == "Grid":
-      i = ulayer("Grid",gridboxes)
+  for layer in data['layers']:
+    if layer['_umap_options']['name'] == "Grid":
+      # The update() method adds element(s) to the dictionary if the key is not in the dictionary.
+      # If the key is in the dictionary, it updates the key with the new value.
+      # Thus it would be safe to use update() here only and consequently to drop the insert() part above.
+      layer.update(ulayer("Grid",gridboxes))
       print("An existing grid is updated by a {0}x{1} grid.".format(gridtileslon,gridtileslat))
       break
 
