@@ -4,11 +4,9 @@ Collection of utility scripts for umaps on https://umap.openstreemap.fr
 ## gridparse.py
 
 1. Download an existing umap
-2. Bounding box function
-
+2. Bounding box function   
    calculate a bounding area to bound all features in a map
-2. Grid function
-
+2. Grid function   
    draw a grid n by m polygon rectangles (sectors)   
    number each sector with a char-digit combination like A1..D4   
    create a json file comprising the grid and the sector identifiers   
