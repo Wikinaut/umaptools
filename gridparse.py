@@ -333,7 +333,6 @@ for i in data['layers']:
 
       if geometrietyp == "Point":
          coor = [j['geometry']['coordinates'][0],j['geometry']['coordinates'][1]]
-         boundingbox(coor)
 
       if (geometrietyp == "LineString") and (len(j['properties']) > 0):
 
@@ -343,7 +342,6 @@ for i in data['layers']:
          for each in j['geometry']['coordinates']:
            lon.append(each[0])
            lat.append(each[1])
-           boundingbox([each[0],each[1]])
 
          coor = [np.median(lon),np.median(lat)]
 
@@ -355,7 +353,6 @@ for i in data['layers']:
          for each in j['geometry']['coordinates'][0]:
            lon.append(each[0])
            lat.append(each[1])
-           boundingbox([each[0],each[1]])
 
          coor = [np.median(lon),np.median(lat)]
 
@@ -384,7 +381,7 @@ for i in data['layers']:
            "[{0}] {1}".format(sector[0]+sector[1],name.rstrip('\n'))
          ])
 
-outbuf_sorted = sorted(outbuf, key=lambda x: (x[1],x[2]))
+outbuf_sorted = sorted(outbuf, key=lambda x: (x[2],x[1]))
 
 f = open(umaptextfile, "w")
 f.write(basicinfo+"\n\n")
