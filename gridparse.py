@@ -57,6 +57,7 @@ print(args)
 umapnumber = args.umapnumber
 gridtileslon = args.x
 gridtileslat = args.y
+gridxsize = "{0}x{1}".format(gridtileslon,gridtileslat)
 gridcolor = args.color
 gridweight = args.weight
 gridopacity = args.opacity
@@ -67,9 +68,12 @@ r = urllib.request.urlopen(req).read()
 data = json.loads(r.decode('utf-8'))
 
 umapname = data['properties']['name']
+umapdescription = data['properties']['description']
 
 now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-basicinfo = "'{0}' (umap {1}) {2}\nhttps://umap.openstreetmap.fr/de/map/map_{1}".format(umapname,umapnumber,now)
+basicinfo = "'{0}' (umap {1}) {2}\nhttps://umap.openstreetmap.fr/de/map/map_{1}\n\n{3}". \
+  format(umapname.strip(),umapnumber,now,umapdescription.strip())
+
 print(basicinfo)
 
 umapinfile = "umap-original-{0}-{1}.umap".format(umapname,umapnumber)
@@ -77,8 +81,8 @@ umapinfile = "umap-original-{0}-{1}.umap".format(umapname,umapnumber)
 with open(umapinfile, 'w') as infile:
     json.dump(data, infile, indent=4)
 
-umapoutfile = "umap-with-grid-{0}-{1}.umap".format(umapname,umapnumber)
-umapgridfile = "umap-grid-only-{0}-{1}.json".format(umapname,umapnumber)
+umapoutfile = "umap-with-grid-{2}-{0}-{1}.umap".format(umapname,umapnumber,gridxsize)
+umapgridfile = "umap-only-grid-{2}-{0}-{1}.json".format(umapname,umapnumber,gridxsize)
 umaptextfile = "umap-{0}-{1}.umap.txt".format(umapname,umapnumber)
 
 outbuf = []
@@ -274,7 +278,7 @@ def isPresentGrid():
 
 if not isPresentGrid():
   data['layers'].insert(0,ulayer("Grid",gridboxes))
-  print("A new grid {0}x{1} is created.".format(gridtileslon,gridtileslat))
+  print("A new grid {0} is created.".format(gridxsize))
 else:
   for layer in data['layers']:
     if layer['_umap_options']['name'] == "Grid":
@@ -282,11 +286,11 @@ else:
       # If the key is in the dictionary, it updates the key with the new value.
       # Thus it would be safe to use update() here only and consequently to drop the insert() part above.
       layer.update(ulayer("Grid",gridboxes))
-      print("An existing grid is updated by a {0}x{1} grid.".format(gridtileslon,gridtileslat))
+      print("An existing grid is updated by a {0} grid.".format(gridxsize))
       break
 
 with open(umapgridfile, 'w') as gridfile:
-    json.dump(ulayer("Grid",gridboxes), gridfile, indent=4)
+    json.dump(ulayer("Grid-{0}".format(gridxsize),gridboxes), gridfile, indent=4)
 
 
 def findsector(coor):
@@ -380,7 +384,7 @@ for i in data['layers']:
 outbuf_sorted = sorted(outbuf, key=lambda x: (x[2],x[1]))
 
 f = open(umaptextfile, "w")
-f.write(basicinfo+"\n\n\n")
+f.write("{0}\nBoundingbox: {1}\n\n".format(basicinfo,bbox))
 
 i = 1
 for line in outbuf_sorted:
