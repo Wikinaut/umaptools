@@ -143,8 +143,6 @@ for i in data['layers']:
     # loop through all layers ends
 
 
-# print("Boundingbox: {0}".format(bbox))
-
 # Pass 2: Create a grid
 
 difflon = abs(bbox['maxlon']-bbox['minlon'])
@@ -152,8 +150,6 @@ difflat = abs(bbox['maxlat']-bbox['minlat'])
 
 deltalon = difflon/gridtileslon
 deltalat = difflat/gridtileslat
-
-# draw grid lines
 
 grid = []
 
@@ -312,7 +308,7 @@ def findsector(coor):
   return [sectorlon,sectorlat]
 
 
-# Pass 1b: Assigning a sector identifier
+# Pass 3: Assign sector identifiers
 
 for i in data['layers']:
 
@@ -324,7 +320,7 @@ for i in data['layers']:
     coor = [0,0] # [lon,lat]
 
     try:
-      description = j['properties']['description']
+      description = j['properties']['description'].strip()
     except:
       description = ""
 
@@ -384,11 +380,11 @@ for i in data['layers']:
 outbuf_sorted = sorted(outbuf, key=lambda x: (x[2],x[1]))
 
 f = open(umaptextfile, "w")
-f.write(basicinfo+"\n\n")
+f.write(basicinfo+"\n\n\n")
 
 i = 1
 for line in outbuf_sorted:
-  f.write("{4:02d}. {3}\n[{0:0.6f},{1:0.6f}] ({2})\n\n".format(line[0][0],line[0][1],line[3],line[4],i))
+  f.write("{4:02d}.\n{3}\n[{0:0.6f},{1:0.6f}] ({2})\n\n".format(line[0][0],line[0][1],line[3],line[4],i))
   i += 1
 
 """
