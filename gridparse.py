@@ -181,7 +181,7 @@ def uline(line,name=None,color="Black",weight=4,opacity=0.7):
           }
   }
 
-def upolygon(coordinates,name=None,color="Black",weight=4,opacity=0.7):
+def upolygon(coordinates,name=None,description=None,color="Black",weight=4,opacity=0.7):
   return {
           "type": "Feature",
           "properties": {
@@ -197,7 +197,8 @@ def upolygon(coordinates,name=None,color="Black",weight=4,opacity=0.7):
               "popupShape": "Default",
               "labelInteractive": False
             },
-            "name": name
+            "name": name,
+            "description": description
           },
           "geometry": {
             "type": "Polygon",
@@ -265,7 +266,16 @@ for ilon in range(0,gridtileslon):
         [toplon+ilon*deltalon,toplat-ilat*deltalat],
 	[toplon+(ilon+1)*deltalon,toplat-(ilat+1)*deltalat],
         sectorlon, sectorlat
-      ), sectorlon+sectorlat, gridcolor, gridweight, gridopacity
+      ),
+      sectorlon+sectorlat,
+      json.dumps({
+	"midlon" : toplon+deltalon/2,
+        "deltalon" : deltalon,
+	"midlat" : toplat+deltalat/2,
+        "deltalat" : deltalat,
+        "boundingbox": bbox
+      },indent=4),
+      gridcolor, gridweight, gridopacity
     ))
 
 
