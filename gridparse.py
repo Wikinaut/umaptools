@@ -273,7 +273,8 @@ for ilon in range(0,gridtileslon):
         "deltalon" : deltalon,
 	"midlat" : toplat+deltalat/2,
         "deltalat" : deltalat,
-        "boundingbox": bbox
+        "boundingbox": bbox,
+        "umap": umapnumber
       },indent=4),
       gridcolor, gridweight, gridopacity
     ))
