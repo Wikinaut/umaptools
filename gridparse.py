@@ -269,9 +269,9 @@ for ilon in range(0,gridtileslon):
       ),
       sectorlon+sectorlat,
       json.dumps({
-	"midlon" : toplon+deltalon/2,
+	"midlon" : toplon+ilon*deltalon+deltalon/2,
         "deltalon" : deltalon,
-	"midlat" : toplat+deltalat/2,
+	"midlat" : toplat-ilat*deltalat-deltalat/2,
         "deltalat" : deltalat,
         "boundingbox": bbox,
         "umap": umapnumber
