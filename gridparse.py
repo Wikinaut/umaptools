@@ -392,7 +392,7 @@ for i in data['layers']:
            "[{0}] {1}".format(sector[0]+sector[1],name.rstrip('\n'))
          ])
 
-outbuf_sorted = sorted(outbuf, key=lambda x: (x[2],x[1]))
+outbuf_sorted = sorted(outbuf, key=lambda x: (-x[0][1],x[0][0]))
 
 f = open(umaptextfile, "w")
 f.write("{0}\nBoundingbox: {1}\n\n".format(basicinfo,bbox))
