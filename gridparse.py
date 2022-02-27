@@ -84,6 +84,7 @@ with open(umapinfile, 'w') as infile:
 umapoutfile = "umap-with-grid-{2}-{0}-{1}.umap".format(umapname,umapnumber,gridxsize)
 umapgridfile = "umap-only-grid-{2}-{0}-{1}.json".format(umapname,umapnumber,gridxsize)
 umaptextfile = "umap-{0}-{1}.umap.txt".format(umapname,umapnumber)
+umappointfile = "umap-only-points-{0}-{1}.json".format(umapname,umapnumber)
 
 outbuf = []
 
@@ -219,6 +220,27 @@ def ulayer(name,features):
             }
   }
 
+
+def upoint(coordinates,number,name="",description=""):
+  return {
+    "type": "Feature",
+    "properties": {
+      "_umap_options": {
+        "color": "Yellow",
+        "showLabel": None, # show label onhover
+        "iconClass": "Drop",
+        "iconUrl": "https://raw.githubusercontent.com/Wikinaut/images/master/80/circle-{0}.png".format(number)
+      },
+      "name" : name,
+      "description": description
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": coordinates
+    }
+  }
+
+
 blon = []
 blat = []
 
@@ -340,6 +362,13 @@ for i in data['layers']:
       description = ""
 
     try:
+      if j['properties']['_umap_options']['iconClass'] == "Ball":
+        j['properties']['_umap_options']['iconClass'] = "Circle"
+        j.update()
+    except:
+      pass
+
+    try:
       geometrietyp = j['geometry']['type']
 
       if geometrietyp == "Point":
@@ -379,14 +408,16 @@ for i in data['layers']:
 
     if len(name+description) > 0:
        if len(description) != 0:
-         outbuf.append([coor,
+         outbuf.append([
+           coor,
            sector[0],sector[1],
            geometrietyp,
            "[{0}] {1}\n{2}"
            .format(sector[0]+sector[1],name.rstrip('\n'),description.rstrip('\n'))
          ])
        else:
-         outbuf.append([coor,
+         outbuf.append([
+           coor,
            sector[0],sector[1],
            geometrietyp,
            "[{0}] {1}".format(sector[0]+sector[1],name.rstrip('\n'))
@@ -397,10 +428,20 @@ outbuf_sorted = sorted(outbuf, key=lambda x: (x[2],x[1],-x[0][1],x[0][0]))
 f = open(umaptextfile, "w")
 f.write("{0}\nBoundingbox: {1}\n\n".format(basicinfo,bbox))
 
+bubbles = []
+
 i = 1
 for line in outbuf_sorted:
-  f.write("{4:02d}.\n{3}\n[{0:0.6f},{1:0.6f}] ({2})\n\n".format(line[0][0],line[0][1],line[3],line[4],i))
+  lon = line[0][0]
+  lat = line[0][1]
+  f.write("{4:02d}.\n{3}\n[{0:0.6f},{1:0.6f}] ({2})\n\n".format(lon,lat,line[3],line[4],i))
+  description=""
+  bubbles.append(upoint([lon,lat],i,"{0:02d} {1}".format(i,line[4]),description))
   i += 1
+
+with open(umappointfile, 'w') as pointfile:
+  json.dump(ulayer("Points",bubbles), pointfile, indent=4)
+
 
 """
 # draw the boundingbox in a new layer
@@ -432,3 +473,6 @@ print("Downloaded umap written to '{0}'.".format(umapinfile))
 print("Umap with grid and sector numbers written to '{0}'.".format(umapoutfile))
 print("Grid as single umap layer written to '{0}'.".format(umapgridfile))
 print("Text data written to '{0}'.".format(umaptextfile))
+
+with open("circle-"+umapinfile, 'w') as infile:
+    json.dump(data, infile, indent=4)
