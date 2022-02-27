@@ -66,6 +66,6 @@ create an circle image 80x80 yellow with opacity 1.0 and text "42"
 
 <img src="https://raw.githubusercontent.com/Wikinaut/umaptools/main/img/80/circle-42.png" />
 
-create yellow images with numbers 1..99  
+create yellow 80x80 number 1..99 images with opacity 0.7 
 ```for i in {1..99};do ./make-circle.sh "$i" 80 yellow 0.7;done```
 
