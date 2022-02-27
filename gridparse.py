@@ -77,12 +77,13 @@ basicinfo = "'{0}' (umap {1}) {2}\nhttps://umap.openstreetmap.fr/de/map/map_{1}\
 print(basicinfo)
 
 umapinfile = "umap-original-{0}-{1}.umap".format(umapname,umapnumber)
+umapcirclefile = "umap-original-balls-changed-to-circles-{0}-{1}.umap".format(umapname,umapnumber)
 
 with open(umapinfile, 'w') as infile:
     json.dump(data, infile, indent=4)
 
 umapoutfile = "umap-with-grid-{2}-{0}-{1}.umap".format(umapname,umapnumber,gridxsize)
-umapgridfile = "umap-only-grid-{2}-{0}-{1}.json".format(umapname,umapnumber,gridxsize)
+umapgridfile = "umap-only-grid-{1}-{0}.json".format(umapnumber,gridxsize)
 umaptextfile = "umap-{0}-{1}.umap.txt".format(umapname,umapnumber)
 umappointfile = "umap-only-points-{0}-{1}.json".format(umapname,umapnumber)
 
@@ -474,5 +475,5 @@ print("Umap with grid and sector numbers written to '{0}'.".format(umapoutfile))
 print("Grid as single umap layer written to '{0}'.".format(umapgridfile))
 print("Text data written to '{0}'.".format(umaptextfile))
 
-with open("circle-"+umapinfile, 'w') as infile:
-    json.dump(data, infile, indent=4)
+with open(umapcirclefile, 'w') as outfile:
+    json.dump(data, outfile, indent=4)
