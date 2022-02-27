@@ -9,11 +9,14 @@ Collection of utility scripts for umaps on https://umap.openstreemap.fr
 2. Grid function   
    draw a grid n by m polygon rectangles (sectors)   
    number each sector with a char-digit combination like A1..D4   
-   create a json file comprising the grid and the sector identifiers   
-   
+   create a json file comprising the grid coordinates and the sector identifiers   
 3. Text function   
    extract all feature names and texts   
    order the features by their position, number them and write a text file   
+4. Change feature "Ball" (needle) to "Circle"
+5. Create a new layer "Points" with all existing Features west-east/north-south sorted and small numbered icon class "Drop"
+6. Copy name/description of existing Features to the new layer "Points"
+7. Set showLabel option to "None", which effectively shows the text when hovering over them
 
 <img src="https://raw.githubusercontent.com/Wikinaut/umaptools/main/documentation/testumap-with-3x3-grid.png" width=1200>
 
