@@ -18,7 +18,11 @@ Collection of utility scripts for umaps on https://umap.openstreemap.fr
 6. Copy name/description of existing Features to the new layer "Points"
 7. Set showLabel option to "None", which effectively shows the text when hovering over them
 
+Example for grid generation:  
 <img src="https://raw.githubusercontent.com/Wikinaut/umaptools/main/documentation/testumap-with-3x3-grid.png" width=1200>
+
+Example for numbered points ("drops") generation:  
+<img src="https://raw.githubusercontent.com/Wikinaut/umaptools/main/documentation/testumap-with-numbered-drops.png" width=400>
 
 * https://twitter.com/Wikinaut/status/1495188916198162439
 ```
