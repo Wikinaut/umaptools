@@ -71,6 +71,4 @@ create yellow 80x80 number 1..99 images with opacity 0.7
 
 ```for i in {1..99};do ./make-circle.sh "$i" 80 yellow 0.7;done```
 
-Result see → https://github.com/Wikinaut/umaptools/img/80
-
-
+Result see → https://github.com/Wikinaut/umaptools/tree/main/img/80
