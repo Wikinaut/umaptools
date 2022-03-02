@@ -23,6 +23,12 @@
 #    extract all feature names and texts
 #    order the features by their position, number them and write a text file
 #
+#
+#    4. create numbers "drops" (drop points with numbers)
+#
+#    create a further json file as separate layer with such points
+#
+#
 #    20220217 init
 
 import json
@@ -216,6 +222,7 @@ def ulayer(name,features):
             "_umap_options": {
                 "displayOnLoad": True,
                 "browsable": True,
+		"gridparseIgnore": True,
                 "remoteData": {},
                 "name": name
             }
@@ -230,7 +237,7 @@ def upoint(coordinates,number,name="",description=""):
         "color": "Yellow",
         "showLabel": None, # show label onhover
         "iconClass": "Drop",
-        "iconUrl": "https://raw.githubusercontent.com/Wikinaut/images/master/80/circle-{0}.png".format(number)
+        "iconUrl": "https://raw.githubusercontent.com/Wikinaut/umaptools/main/img/80/circle-{0}.png".format(number)
       },
       "name" : name,
       "description": description
@@ -350,7 +357,7 @@ def findsector(coor):
 
 for i in data['layers']:
 
-  if i['_umap_options']['name'] == "Grid":
+  if i['_umap_options']['name'] == "Grid" or i['_umap_options'].get('gridparseIgnore',False):
     continue
 
   for j in i['features']:
