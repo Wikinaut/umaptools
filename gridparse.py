@@ -13,20 +13,27 @@
 #
 #    2. Grid function
 #
-#    draw a grid n by m polygon rectangles (sectors)
-#    number each sector with a char-digit combination like A1..D4
-#    create a json file comprising the grid and the sector identifiers
+#    - draw a grid n by m polygon rectangles (sectors)
+#    - number each sector with a char-digit combination like A1..D4
+#    - create a json file comprising the n x m grid and the sector identifiers
+#      with their sector coordinates
+#    - this allows us to print separate screenshots of each sector later
 #
 #
 #    3. Text function
 #
-#    extract all feature names and texts
-#    order the features by their position, number them and write a text file
+#    - extract all feature names and texts
+#    - order all these features by their positions
+#    - (order like reading from top left-to-right, then down)
+#    - number them and write a text file
 #
 #
-#    4. create numbers "drops" (drop points with numbers)
+#    4. create numbered "drops" = drop points with numbers
 #
-#    create a further json file as separate layer with such points
+#    - create a separate layer with these points
+#    - copy the feature text (name/description), the feature number
+#      and the the feature sector to each numbered drop
+#    - set showLabel visibility to "on hover"
 #
 #
 #    20220217 init
@@ -83,15 +90,15 @@ basicinfo = "'{0}' (umap {1}) {2}\nhttps://umap.openstreetmap.fr/de/map/map_{1}\
 print(basicinfo)
 
 umapinfile = "umap-original-{0}-{1}.umap".format(umapname,umapnumber)
-umapcirclefile = "umap-original-balls-changed-to-circles-{0}-{1}.umap".format(umapname,umapnumber)
+umapcirclefile = "umap-original-ball-icons-changed-to-circle-icons-{0}-{1}.umap".format(umapname,umapnumber)
 
 with open(umapinfile, 'w') as infile:
     json.dump(data, infile, indent=4)
 
-umapoutfile = "umap-with-grid-{2}-{0}-{1}.umap".format(umapname,umapnumber,gridxsize)
-umapgridfile = "umap-only-grid-{1}-{0}.json".format(umapnumber,gridxsize)
+umapoutfile = "umap-with-grid-{0}-{1}-{2}.umap".format(gridxsize,umapname,umapnumber)
+umapgridfile = "umap-only-grid-{0}-{1}-{2}.json".format(gridxsize,umapname,umapnumber)
 umaptextfile = "umap-{0}-{1}.umap.txt".format(umapname,umapnumber)
-umappointfile = "umap-only-points-{0}-{1}.json".format(umapname,umapnumber)
+umapdropsfile = "umap-only-drops-{0}-{1}.json".format(umapname,umapnumber)
 
 outbuf = []
 
@@ -436,7 +443,7 @@ outbuf_sorted = sorted(outbuf, key=lambda x: (x[2],x[1],-x[0][1],x[0][0]))
 f = open(umaptextfile, "w")
 f.write("{0}\nBoundingbox: {1}\n\n".format(basicinfo,bbox))
 
-bubbles = []
+drops = []
 
 i = 1
 for line in outbuf_sorted:
@@ -444,11 +451,11 @@ for line in outbuf_sorted:
   lat = line[0][1]
   f.write("{4:02d}.\n{3}\n[{0:0.6f},{1:0.6f}] ({2})\n\n".format(lon,lat,line[3],line[4],i))
   description=""
-  bubbles.append(upoint([lon,lat],i,"{0:02d} {1}".format(i,line[4]),description))
+  drops.append(upoint([lon,lat],i,"{0:02d} {1}".format(i,line[4]),description))
   i += 1
 
-with open(umappointfile, 'w') as pointfile:
-  json.dump(ulayer("Points",bubbles), pointfile, indent=4)
+with open(umapdropsfile, 'w') as dropsfile:
+  json.dump(ulayer("Points",drops), dropsfile, indent=4)
 
 
 """
