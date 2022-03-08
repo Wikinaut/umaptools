@@ -82,6 +82,6 @@ Creates a single screenshot of a umap in possibly a very high resolution (e.g. z
 ```node screenshot.js umapnumber [width height imageoutputfile]```
 
 ## make-tiled-screenshots.js
-Creates single screenshots for each of the n x m grid sectors of a umap – the grid added by a previous run and import of gridparse.py – the screenshots have a user-definable high resolution (zoom). The script parses the grid layer of the umap where it finds the precomputed corner coordinates and the sector identifier (like 'A1') of each sector. it then creates separate screenshot image files with the same image width and height. Requires/uses puppeteer.
+Creates single screenshots for each of the n x m grid sectors of a umap – the grid added by a previous run and import of gridparse.py – the screenshots have a user-definable high resolution (zoom). The script parses the grid layer json file of the umap (umap-grid.json as output from gridparse.py) and reads in that way the precomputed corner coordinates and the sector identifier (like 'A1') of each sector. It creates separate screenshot (image) png files of same dimensions. Requires/uses puppeteer.
 
 ```node make-tiled-screenshots.js umap-grid.json```
