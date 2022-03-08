@@ -50,7 +50,7 @@ def setup_parser():
 
     my_parser = argparse.ArgumentParser( prog = re.sub( '.py$', '', sys.argv[0] ),
         usage = '%(prog)s umapnumber [-h] [-x] [-y] [-c|--color] [-w|weight] [-o|opacity]',
-        description = 'Umap parser adds a grid and extract, sorts, numbers texts according to coordinates'
+        description = 'Umap parser adds a grid and extracts, sorts, numbers texts according to coordinates'
     )
 
     my_parser.add_argument('umapnumber', action='store', type=int, help='number of the umap you want to process')
