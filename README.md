@@ -39,7 +39,7 @@ New utility script for umaps: gridparse.py
 ```
 usage: ./gridparse umapnumber [-h] [-x] [-y] [-c|--color] [-w|weight] [-o|opacity]
 
-Umap parser adds a grid and extract, sorts, numbers texts according to coordinates
+Umap parser adds a grid and extracts, sorts, numbers texts according to coordinates
 
 positional arguments:
   umapnumber            number of the umap you want to process
