@@ -76,9 +76,12 @@ Result see → https://github.com/Wikinaut/umaptools/tree/main/img/80
 
 ## screenshot tools
 
-## make-screenshot.js
-make a single screenshot of a umap. Requires/uses puppeteer.
+## screenshot.js
+make a single screenshot of a umap. Requires/uses puppeteer.  
 
+```node screenshot.js umapnumber [width height imageoutputfile]```
 
 ## make-tiled-screenshots.js
-make screenshots for all n x m sectors of a umap with a grid, each in user-definable high resolution (zoom)
+Creates single screenshots for each of the n x m grid sectors of a umap – the grid added by a previous run and import of gridparse.py – the screenshots have a user-definable high resolution (zoom). The script parses the grid layer of the umap where it finds the precomputed corner coordinates and the sector identifier (like 'A1') of each sector. it then creates separate screenshot image files with the same image width and height.
+
+```node make-tiled-screenshots.js umap-grid.json```
