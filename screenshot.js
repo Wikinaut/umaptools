@@ -1,6 +1,8 @@
 const puppeteer = require('puppeteer');         // Require Puppeteer module
 const myArgs = process.argv.slice(2);
 
+# based on https://www.testim.io/blog/puppeteer-screenshot/
+
 if (myArgs.length < 1) {
 
    console.log("Usage: node screenshot.js umapnumber [width height imageoutputfile]")
